@@ -1,0 +1,33 @@
+version: '3.0'
+services:
+  rasa:
+    image: rasa/rasa:current
+    restart: always
+    ports:
+      - 5005:5005
+    volumes:
+      - ./:/app
+      
+    command:
+      - run
+      - -m models
+      - --enable-api
+      - --cors 
+      - "*"
+    depends_on:
+        - app
+        
+
+
+
+  app:
+    image: rasa/rasa-sdk:current
+    ports: 
+      - 5055:5055
+    volumes:
+      - ./actions:/app/actions
+    # expose: 
+    #   - "5055"
+    restart: always
+
+
